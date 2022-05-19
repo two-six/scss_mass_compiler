@@ -1,5 +1,4 @@
-use std::{io, env};
-use std::fs::{self};
+use std::{io, env, fs};
 use std::path::Path;
 use std::ffi::OsString;
 use ansi_term::Colour;
@@ -21,9 +20,10 @@ where F: Fn(fs::DirEntry) -> io::Result<()> + Copy {
 
 fn compile_scss(x: fs::DirEntry) -> io::Result<()> {
     if x.path().extension() == Some(&OsString::from("scss")) {
-        println!("{} {}", Colour::White.on(Colour::Green).paint("Compiling"), x.path().to_str().unwrap());
-        let result = grass::from_path(x.path().to_str().unwrap(), &grass::Options::default()).unwrap();
-        fs::write(x.path().to_str().unwrap().replace(".scss", ".css"), result)?;
+        let path = x.path().to_str().unwrap().to_owned();
+        println!("{} {}", Colour::White.on(Colour::Green).paint("Compiling"), path);
+        let result = grass::from_path(&path, &grass::Options::default()).unwrap();
+        fs::write(path.replace(".scss", ".css"), result)?;
     }
     Ok(())
 }
