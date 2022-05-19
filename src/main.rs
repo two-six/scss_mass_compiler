@@ -19,7 +19,7 @@ where F: Fn(fs::DirEntry) -> io::Result<()> + Copy {
     Ok(())
 }
 
-fn on_scss(x: fs::DirEntry) -> io::Result<()> {
+fn compile_scss(x: fs::DirEntry) -> io::Result<()> {
     if x.path().extension() == Some(&OsString::from("scss")) {
         println!("{} {}", Colour::White.on(Colour::Green).paint("Compiling"), x.path().to_str().unwrap());
         let result = grass::from_path(x.path().to_str().unwrap(), &grass::Options::default()).unwrap();
@@ -29,6 +29,6 @@ fn on_scss(x: fs::DirEntry) -> io::Result<()> {
 }
 
 fn main() -> io::Result<()> {
-    visit_dirs(Path::new(&env::current_dir().unwrap()), on_scss)?;
+    visit_dirs(Path::new(&env::current_dir().unwrap()), compile_scss)?;
     Ok(())
 }
