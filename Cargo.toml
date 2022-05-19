@@ -7,6 +7,7 @@ readme = "README.org"
 license = "LGPL-3.0-or-later"
 version = "1.0.0"
 edition = "2021"
+description = "Recursively converts all .scss files in current directory and it’s subdirectories."
 
 [dependencies]
 grass = "0.11.0"
