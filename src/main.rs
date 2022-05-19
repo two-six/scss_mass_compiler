@@ -1,9 +1,8 @@
-use std::io;
+use std::{io, env};
 use std::fs::{self};
 use std::path::Path;
 use std::ffi::OsString;
-use std::env;
-use std::process::Command;
+use ansi_term::Colour;
 
 fn visit_dirs<F>(dir: &Path, f: F) -> io::Result<()>
 where F: Fn(fs::DirEntry) -> io::Result<()> + Copy {
@@ -22,13 +21,9 @@ where F: Fn(fs::DirEntry) -> io::Result<()> + Copy {
 
 fn on_scss(x: fs::DirEntry) -> io::Result<()> {
     if x.path().extension() == Some(&OsString::from("scss")) {
-        Command::new("npx")
-            .arg("sass")
-            .arg("--no-source-map")
-            .arg(x.path())
-            .arg(x.path().to_str().unwrap().replace(".scss", ".css"))
-            .output()
-            .expect("Error while running command");
+        println!("{} {}", Colour::White.on(Colour::Green).paint("Compiling"), x.path().to_str().unwrap());
+        let result = grass::from_path(x.path().to_str().unwrap(), &grass::Options::default()).unwrap();
+        fs::write(x.path().to_str().unwrap().replace(".scss", ".css"), result)?;
     }
     Ok(())
 }
