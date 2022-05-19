@@ -4,8 +4,8 @@ homepage = "https://github.com/two-six/scss_mass_compiler"
 repository = "https://github.com/two-six/scss_mass_compiler"
 categories = ["command-line-utilities"]
 readme = "README.md"
-license = "LGPL-3.0-or-later"
-version = "1.0.1"
+license = "LGPL-2.1-only"
+version = "1.0.2"
 edition = "2021"
 description = "Recursively converts all .scss files in current directory and it’s subdirectories."
 
