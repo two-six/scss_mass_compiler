@@ -11,8 +11,9 @@ where F: Fn(fs::DirEntry) -> io::Result<()> + Copy {
             let file_u = file?;
             if file_u.file_type()?.is_dir() {
                 visit_dirs(&file_u.path(), f)?;
+            } else {
+                f(file_u)?;
             }
-            f(file_u)?;
         }
     }
     Ok(())
